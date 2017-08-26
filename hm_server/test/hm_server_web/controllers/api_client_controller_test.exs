@@ -6,7 +6,7 @@ defmodule HMServerWeb.ApiClientControllerTest do
     assert json_response(conn, 200) == []
   end
 
-  test "GET /api/clients", %{conn: conn} do
+  test "GET /api/clients returns the credentials list", %{conn: conn} do
     seeded_credentials = [
       insert(:credential),
       insert(:credential, %{client_disabled: true}),
