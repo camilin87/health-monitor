@@ -24,5 +24,6 @@ defmodule HMServerWeb.Router do
     pipe_through :api
 
     resources "/clients", ApiClientController, only: [:index]
+    resources "/beat", ApiBeatController, only: [:create]
   end
 end
