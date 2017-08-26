@@ -20,7 +20,9 @@ defmodule HMServerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", HMServerWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", HMServerWeb do
+    pipe_through :api
+
+    resources "/clients", ApiClientController, only: [:index]
+  end
 end
