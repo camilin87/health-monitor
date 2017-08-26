@@ -16,9 +16,9 @@ defmodule HMServerWeb.ApiClientControllerTest do
     conn = get conn, "/api/clients"
 
     assert json_response(conn, 200) == [
-      %{"id" => Enum.at(seeded_credentials, 0).client_id, "is_enabled" => true },
-      %{"id" => Enum.at(seeded_credentials, 1).client_id, "is_enabled" => false },
-      %{"id" => Enum.at(seeded_credentials, 2).client_id, "is_enabled" => true }
+      %{"id" => "test0", "is_enabled" => true },
+      %{"id" => "test1", "is_enabled" => false },
+      %{"id" => "test2", "is_enabled" => true }
     ]
   end
 end
