@@ -19,6 +19,7 @@ defmodule HMServerWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
+      import HMServer.Factory
       import HMServerWeb.Router.Helpers
 
       # The default endpoint for testing
