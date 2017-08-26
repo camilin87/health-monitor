@@ -6,23 +6,19 @@ defmodule HMServerWeb.ApiClientControllerTest do
     assert json_response(conn, 200) == []
   end
 
-  # test "GET /api/clients" do
-  #   conn = build_conn()
-  #   credential = insert(:credential)
+  test "GET /api/clients", %{conn: conn} do
+    seeded_credentials = [
+      insert(:credential),
+      insert(:credential, %{client_disabled: true}),
+      insert(:credential)
+    ]
 
-  #   # c = build(:credential)
-  #   # IO.inspect c
+    conn = get conn, "/api/clients"
 
-  #   # conn = get conn, api_client_path(conn, :index)
-
-  #   # assert json_response(conn, 200) == []
-  # end
-
-  test "GET /api/clients renders a list of credentials", %{conn: conn} do
-    credential = insert(:credential)
-
-    # conn = get conn, api_client_path(conn, :index)
-
-    # assert json_response(conn, 200) == []
+    assert json_response(conn, 200) == [
+      %{"id" => Enum.at(seeded_credentials, 0).client_id, "is_enabled" => true },
+      %{"id" => Enum.at(seeded_credentials, 1).client_id, "is_enabled" => false },
+      %{"id" => Enum.at(seeded_credentials, 2).client_id, "is_enabled" => true }
+    ]
   end
 end
