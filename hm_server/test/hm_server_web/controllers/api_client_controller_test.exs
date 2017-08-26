@@ -15,10 +15,18 @@ defmodule HMServerWeb.ApiClientControllerTest do
 
     conn = get conn, "/api/clients"
 
-    assert json_response(conn, 200) == [
-      %{"id" => "test0", "is_enabled" => true },
-      %{"id" => "test1", "is_enabled" => false },
-      %{"id" => "test2", "is_enabled" => true }
-    ]
+    assert json_response(conn, 200) == render_json(credentials: [
+      %{client_id: "test0", client_disabled: false},
+      %{client_id: "test1", client_disabled: true},
+      %{client_id: "test2", client_disabled: false},
+    ])
+  end
+
+  defp render_json(data, view_name \\ "index.json") do
+    data = Map.new(data)
+
+    HMServerWeb.ApiClientView.render(view_name, data)
+    |> Poison.encode!
+    |> Poison.decode!
   end
 end
