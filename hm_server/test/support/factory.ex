@@ -7,7 +7,6 @@ defmodule HMServer.Factory do
     }
   end
 
-  # Convenience API
   def build(factory_name, attributes) do
     factory_name |> build() |> struct(attributes)
   end

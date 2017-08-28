@@ -15,6 +15,16 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert conn.status == 401
   end
 
+  test "POST /api/beat fails when credentials are incorrect", %{conn: conn} do
+    insert!(:credential)
+
+    conn = conn
+    |> authenticate("test", "incorrect")
+    |> post("/api/beat")
+
+    assert conn.status == 401
+  end
+
   #
   # this test needs to be enhanced
   #
