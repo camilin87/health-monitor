@@ -1,8 +1,11 @@
 defmodule HMServer.Factory do
+  def default_password, do: "111111"
+  def default_user, do: "test"
+
   def build(:credential) do
     %HMServer.Credential {
-      client_id: "test",
-      secret_key: "111111",
+      client_id: default_user(),
+      secret_key: default_password(),
       client_disabled: false
     }
   end
