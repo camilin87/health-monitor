@@ -25,14 +25,15 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert conn.status == 401
   end
 
-  #
-  # this test needs to be enhanced
-  #
-  # test "POST /api/beat", %{conn: conn} do
-  #   conn = post conn, "/api/beat"
+  test "POST /api/beat succeeds when credentials are correct", %{conn: conn} do
+    insert!(:credential)
 
-  #   assert json_response(conn, 200) == %{"success" => true}
-  # end
+    conn = conn
+    |> authenticate("test", "111111")
+    |> post("/api/beat")
+
+    assert json_response(conn, 200) == %{"success" => true}
+  end
 
   defp authenticate(conn, username, password) do
     header_content = "Basic " <> Base.encode64("#{username}:#{password}")
