@@ -10,7 +10,7 @@ defmodule HMServerWeb.ApiBeatController do
   def validate_credentials(conn, user, password) do
     # IO.inspect ["validate_credentials", user, password]
 
-    query = %{client_id: user, secret_key: password}
+    query = %{client_id: user, secret_key: password, client_disabled: false}
 
     case HMServer.Repo.get_by(HMServer.Credential, query) do
       %HMServer.Credential{} -> conn

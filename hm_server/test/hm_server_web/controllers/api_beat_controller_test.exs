@@ -25,6 +25,16 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert conn.status == 401
   end
 
+  test "POST /api/beat fails when credentials are disabled", %{conn: conn} do
+    insert!(:credential, %{client_disabled: true})
+
+    conn = conn
+    |> authenticate("test", "111111")
+    |> post("/api/beat")
+
+    assert conn.status == 401
+  end
+
   test "POST /api/beat succeeds when credentials are correct", %{conn: conn} do
     insert!(:credential)
 
