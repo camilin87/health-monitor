@@ -8,11 +8,10 @@ defmodule HMServerWeb.ApiBeatController do
   def create(conn, %{"hostname" => _hostname}) do
     json conn, %{success: true}
   end
+  def create(conn, _), do: send_resp(conn, :bad_request, "")
 
-  def create(conn, _) do
-    send_resp(conn, :bad_request, "")
-  end
-
+  def validate_credentials(conn, "", _), do: conn |> halt
+  def validate_credentials(conn, _, ""), do: conn |> halt
   def validate_credentials(conn, user, password) do
     query = %{client_id: user, secret_key: password, client_disabled: false}
 
@@ -20,6 +19,5 @@ defmodule HMServerWeb.ApiBeatController do
       %HMServer.Credential{} -> conn
       _ -> conn |> halt
     end
-
   end
 end
