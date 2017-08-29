@@ -5,13 +5,15 @@ defmodule HMServerWeb.ApiBeatController do
     callback: &HMServerWeb.ApiBeatController.validate_credentials/3
   ] when action in [:create]
 
-  def create(conn, _params) do
+  def create(conn, %{"hostname" => _hostname}) do
     json conn, %{success: true}
   end
 
-  def validate_credentials(conn, user, password) do
-    # IO.inspect ["validate_credentials", user, password]
+  def create(conn, _) do
+    send_resp(conn, :bad_request, "")
+  end
 
+  def validate_credentials(conn, user, password) do
     query = %{client_id: user, secret_key: password, client_disabled: false}
 
     case HMServer.Repo.get_by(HMServer.Credential, query) do
