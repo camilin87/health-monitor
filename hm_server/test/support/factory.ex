@@ -1,6 +1,6 @@
 defmodule HMServer.Factory do
-  def default_password, do: "111111"
   def default_user, do: "test"
+  def default_password, do: "111111"
 
   def build(:credential) do
     %HMServer.Credential {
