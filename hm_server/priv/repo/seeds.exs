@@ -16,7 +16,7 @@ defmodule SeedHelper do
   def insert(), do: &HMServer.Repo.insert!(&1)
 
   def update_last_beat(), do: &SeedHelper.update_last_beat(&1)
-  def update_last_beat(item), do: item |> Map.put(:last_beat, DateTime.utc_now)
+  def update_last_beat(item), do: %{item | last_beat: DateTime.utc_now}
 end
 
 
