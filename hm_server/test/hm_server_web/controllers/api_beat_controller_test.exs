@@ -4,11 +4,6 @@ defmodule HMServerWeb.ApiBeatControllerTest do
   defp default_hostname(), do: "host1"
   defp send_hostname(hostname \\ default_hostname()), do: [hostname: hostname] 
 
-  defp authenticate(conn, username \\ default_user(), password \\ default_password()) do
-    header_content = "Basic " <> Base.encode64("#{username}:#{password}")
-    conn |> put_req_header("authorization", header_content)
-  end
-
   test "POST /api/beat fails when no credentials are provided", %{conn: conn} do
     conn = post conn, "/api/beat", send_hostname()
 

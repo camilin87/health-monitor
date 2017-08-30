@@ -21,6 +21,7 @@ defmodule HMServerWeb.ConnCase do
       use Phoenix.ConnTest
       import HMServer.Factory
       import HMServerWeb.Router.Helpers
+      import HMServerWeb.ConnCase
 
       # The default endpoint for testing
       @endpoint HMServerWeb.Endpoint
@@ -36,4 +37,11 @@ defmodule HMServerWeb.ConnCase do
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
+  import HMServer.Factory
+  import Plug.Conn
+
+  def authenticate(conn, username \\ default_user(), password \\ default_password()) do
+    header_content = "Basic " <> Base.encode64("#{username}:#{password}")
+    conn |> put_req_header("authorization", header_content)
+  end
 end
