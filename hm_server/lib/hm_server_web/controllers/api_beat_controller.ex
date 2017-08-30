@@ -6,10 +6,23 @@ defmodule HMServerWeb.ApiBeatController do
   ] when action in [:create]
 
   def create(conn, %{"hostname" => hostname}) do
-    %HMServer.Node{
+    # HMServer.Credential |> HMServer.Repo.all |> IO.inspect
+    # IO.puts "-------"
+
+    header_content = Plug.Conn.get_req_header(conn, "authorization")
+    ["Basic " <> encoded_string] = header_content
+    decoded_string = encoded_string |> Base.decode64! |> String.split(":")
+    [client_id, _] = decoded_string
+    # IO.inspect client_id
+    # IO.puts "-------"
+
+    cred = HMServer.Credential |> HMServer.Repo.get_by!(client_id: client_id)
+    # IO.inspect cred
+
+    %HMServer.Node {
       hostname: hostname,
       last_beat: DateTime.utc_now,
-      credential: HMServer.Credential |> HMServer.Repo.one
+      credential: cred
     } |> HMServer.Repo.insert!
 
     json conn, %{success: true}

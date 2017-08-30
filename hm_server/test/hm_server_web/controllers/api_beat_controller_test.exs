@@ -63,12 +63,12 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert conn.status == 400
   end
 
-  @tag :wip
   test "POST /api/beat inserts a node on the first beat", %{conn: conn} do
     insert!(:credential)
+    cred = insert!(:credential, [client_id: "bbbbbbbb"])
 
     conn = conn
-    |> authenticate
+    |> authenticate("bbbbbbbb")
     |> post("/api/beat", send_hostname())
 
     assert json_response(conn, 200) == %{"success" => true}
@@ -77,5 +77,6 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
     assert 0 == node.failure_count
     assert false == node.node_disabled
+    assert cred.id == node.credential_id
   end
 end
