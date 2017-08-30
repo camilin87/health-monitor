@@ -72,6 +72,10 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     |> post("/api/beat", send_hostname())
 
     assert json_response(conn, 200) == %{"success" => true}
-    assert %HMServer.Node{} = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
+    assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
+    assert default_hostname() == node.hostname
+    assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
+    assert 0 == node.failure_count
+    assert false == node.node_disabled
   end
 end
