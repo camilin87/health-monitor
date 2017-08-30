@@ -5,7 +5,13 @@ defmodule HMServerWeb.ApiBeatController do
     callback: &HMServerWeb.ApiBeatController.validate_credentials/3
   ] when action in [:create]
 
-  def create(conn, %{"hostname" => _hostname}) do
+  def create(conn, %{"hostname" => hostname}) do
+    %HMServer.Node{
+      hostname: hostname,
+      last_beat: DateTime.utc_now,
+      credential: HMServer.Credential |> HMServer.Repo.one
+    } |> HMServer.Repo.insert!
+
     json conn, %{success: true}
   end
   def create(conn, _), do: send_resp(conn, :bad_request, "")

@@ -1,7 +1,8 @@
 defmodule HMServerWeb.ApiBeatControllerTest do
   use HMServerWeb.ConnCase
 
-  defp send_hostname(hostname \\ "host1"), do: [hostname: hostname] 
+  defp default_hostname(), do: "host1"
+  defp send_hostname(hostname \\ default_hostname()), do: [hostname: hostname] 
 
   defp authenticate(conn, username \\ default_user(), password \\ default_password()) do
     header_content = "Basic " <> Base.encode64("#{username}:#{password}")
@@ -60,5 +61,17 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     |> post("/api/beat")
 
     assert conn.status == 400
+  end
+
+  @tag :wip
+  test "POST /api/beat inserts a node on the first beat", %{conn: conn} do
+    insert!(:credential)
+
+    conn = conn
+    |> authenticate
+    |> post("/api/beat", send_hostname())
+
+    assert json_response(conn, 200) == %{"success" => true}
+    assert %HMServer.Node{} = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
   end
 end
