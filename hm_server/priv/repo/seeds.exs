@@ -15,14 +15,19 @@ defmodule SeedHelper do
 
   def insert(), do: &HMServer.Repo.insert!(&1)
 
+  def delete_all(), do: &HMServer.Repo.delete_all(&1)
+
   def update_last_beat(), do: &SeedHelper.update_last_beat(&1)
   def update_last_beat(item), do: %{item | last_beat: DateTime.utc_now}
 end
 
 
 # idempotency guarantor
-HMServer.Node |> HMServer.Repo.delete_all
-HMServer.Credential |> HMServer.Repo.delete_all
+[
+  HMServer.Node,
+  HMServer.Credential
+]
+|> Enum.each(SeedHelper.delete_all)
 
 
 [
