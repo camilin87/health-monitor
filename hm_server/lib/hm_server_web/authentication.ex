@@ -1,4 +1,4 @@
-defmodule HMServerWeb.Authorization do
+defmodule HMServerWeb.Authentication do
   import Plug.Conn
 
   def read_user!(conn) do
