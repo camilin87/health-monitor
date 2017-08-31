@@ -2,7 +2,7 @@ defmodule HMServerWeb.ApiBeatController do
   use HMServerWeb, :controller
 
   plug BasicAuth, [
-    callback: &HMServerWeb.ApiBeatController.validate_credentials/3
+    callback: &HMServerWeb.Authentication.authenticate/3
   ] when action in [:create]
 
   def create(conn, %{"hostname" => hostname}) do
@@ -18,11 +18,4 @@ defmodule HMServerWeb.ApiBeatController do
     json conn, %{success: true}
   end
   def create(conn, _), do: send_resp(conn, :bad_request, "")
-
-  def validate_credentials(conn, user, password) do
-    case HMServer.Credential.is_valid(user, password) do
-      true -> conn
-      _ -> conn |> halt
-    end
-  end
 end
