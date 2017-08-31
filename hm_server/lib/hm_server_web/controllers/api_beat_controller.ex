@@ -17,6 +17,7 @@ defmodule HMServerWeb.ApiBeatController do
           last_beat: DateTime.utc_now,
           credential: credential
         } |> HMServer.Repo.insert!
+      %HMServer.Node{node_disabled: true} -> nil
       node ->
         updated_values = %{failure_count: 0, last_beat: DateTime.utc_now}
         updated_fields = [:failure_count, :last_beat]
@@ -25,8 +26,6 @@ defmodule HMServerWeb.ApiBeatController do
         |> Ecto.Changeset.cast(updated_values, updated_fields)
         |> HMServer.Repo.update!
     end
-
-    
 
     json conn, %{success: true}
   end
