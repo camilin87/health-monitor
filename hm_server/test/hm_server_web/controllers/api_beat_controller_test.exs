@@ -1,7 +1,6 @@
 defmodule HMServerWeb.ApiBeatControllerTest do
   use HMServerWeb.ConnCase
 
-  defp default_hostname(), do: "host1"
   defp send_hostname(hostname \\ default_hostname()), do: [hostname: hostname] 
 
   test "POST /api/beat fails when no credentials are provided", %{conn: conn} do

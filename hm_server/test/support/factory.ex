@@ -1,12 +1,22 @@
 defmodule HMServer.Factory do
   def default_user, do: "test"
   def default_password, do: "111111"
+  def default_hostname, do: "node1"
 
   def build(:credential) do
-    %HMServer.Credential {
+    %HMServer.Credential{
       client_id: default_user(),
       secret_key: default_password(),
       client_disabled: false
+    }
+  end
+
+  def build(:node) do
+    %HMServer.Node{
+      hostname: default_hostname(),
+      last_beat: DateTime.utc_now,
+      failure_count: 0,
+      node_disabled: false
     }
   end
 
