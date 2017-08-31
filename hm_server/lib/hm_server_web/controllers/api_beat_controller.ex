@@ -9,11 +9,24 @@ defmodule HMServerWeb.ApiBeatController do
     request_client_id = HMServerWeb.Authentication.read_user!(conn)
     credential = HMServer.Credential |> HMServer.Repo.get_by!(client_id: request_client_id)
 
-    %HMServer.Node {
-      hostname: hostname,
-      last_beat: DateTime.utc_now,
-      credential: credential
-    } |> HMServer.Repo.insert!
+    query = %{hostname: hostname, credential_id: credential.id}
+    case HMServer.Node |> HMServer.Repo.get_by(query) do
+      nil ->
+        %HMServer.Node {
+          hostname: hostname,
+          last_beat: DateTime.utc_now,
+          credential: credential
+        } |> HMServer.Repo.insert!
+      node ->
+        updated_values = %{failure_count: 0, last_beat: DateTime.utc_now}
+        updated_fields = [:failure_count, :last_beat]
+
+        node
+        |> Ecto.Changeset.cast(updated_values, updated_fields)
+        |> HMServer.Repo.update!
+    end
+
+    
 
     json conn, %{success: true}
   end

@@ -73,4 +73,26 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert false == node.node_disabled
     assert cred.id == node.credential_id
   end
+
+  test "POST /api/beat updates the node on consequent beats", %{conn: conn} do
+    cred = insert!(:credential)
+    {:ok, seeded_beat, 0} = DateTime.from_iso8601("2012-01-23T00:00:00Z")
+    insert!(:node, [
+      last_beat: seeded_beat,
+      failure_count: 2,
+      credential: cred
+    ])
+
+    conn = conn
+    |> authenticate
+    |> post("/api/beat", send_hostname())
+
+    assert json_response(conn, 200) == %{"success" => true}
+    assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
+    assert default_hostname() == node.hostname
+    assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
+    assert 0 == node.failure_count
+    assert false == node.node_disabled
+    assert cred.id == node.credential_id
+  end
 end
