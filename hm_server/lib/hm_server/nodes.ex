@@ -11,4 +11,17 @@ defmodule HMServer.Node do
 
     timestamps()
   end
+
+  def update!(item) do
+    case item.node_disabled do
+      true -> item
+      false ->
+        changes = %{failure_count: 0, last_beat: DateTime.utc_now}
+        fieldnames = [:failure_count, :last_beat]
+
+        item
+        |> Ecto.Changeset.cast(changes, fieldnames)
+        |> HMServer.Repo.insert_or_update!
+    end
+  end
 end
