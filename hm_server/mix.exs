@@ -39,6 +39,7 @@ defmodule HMServer.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:credo, "~> 0.8.6", only: [:dev, :test], runtime: false},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:basic_auth, "~> 2.1"}
