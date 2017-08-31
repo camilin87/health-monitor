@@ -19,13 +19,9 @@ defmodule HMServerWeb.ApiBeatController do
   end
   def create(conn, _), do: send_resp(conn, :bad_request, "")
 
-  def validate_credentials(conn, "", _), do: conn |> halt
-  def validate_credentials(conn, _, ""), do: conn |> halt
   def validate_credentials(conn, user, password) do
-    query = %{client_id: user, secret_key: password, client_disabled: false}
-
-    case HMServer.Repo.get_by(HMServer.Credential, query) do
-      %HMServer.Credential{} -> conn
+    case HMServer.Credential.is_valid(user, password) do
+      true -> conn
       _ -> conn |> halt
     end
   end
