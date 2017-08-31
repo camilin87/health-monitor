@@ -1,4 +1,8 @@
 defmodule HMServer.Node do
+  @moduledoc """
+  Node: a single computing node that needs to be monitored
+  """
+
   use Ecto.Schema
 
   schema "api_client_nodes" do

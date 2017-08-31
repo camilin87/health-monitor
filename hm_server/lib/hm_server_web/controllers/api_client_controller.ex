@@ -2,7 +2,8 @@ defmodule HMServerWeb.ApiClientController do
   use HMServerWeb, :controller
 
   def index(conn, _params) do
-    json_result = HMServer.Repo.all(HMServer.Credential)
+    json_result = HMServer.Credential
+    |> HMServer.Repo.all
     |> Enum.map(&credential_json/1)
 
     json conn, json_result

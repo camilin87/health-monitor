@@ -10,11 +10,11 @@ defmodule HMServerWeb.ApiBeatController do
     credential = HMServer.Credential |> HMServer.Repo.get_by!(client_id: request_client_id)
 
     query = %{hostname: hostname, credential_id: credential.id}
-    case HMServer.Node |> HMServer.Repo.get_by(query) do
+    target_node = case HMServer.Node |> HMServer.Repo.get_by(query) do
       nil -> %HMServer.Node {hostname: hostname, credential: credential, node_disabled: false}
       existing_node -> existing_node
     end
-    |> HMServer.Node.update!
+    target_node |> HMServer.Node.update!
 
     json conn, %{success: true}
   end

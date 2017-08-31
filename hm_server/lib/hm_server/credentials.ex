@@ -1,4 +1,8 @@
 defmodule HMServer.Credential do
+  @moduledoc """
+  Credential: a single registered api account
+  """
+
   use Ecto.Schema
 
   schema "api_credentials" do

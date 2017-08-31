@@ -1,4 +1,10 @@
 defmodule HMServerWeb.Authentication do
+  @moduledoc """
+  Encapsulates authentication-related functionality such as
+  - Reading the authenticated user
+  - Authenticating a web request
+  """
+
   import Plug.Conn
 
   def read_user!(conn) do
