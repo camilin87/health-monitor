@@ -30,4 +30,15 @@ defmodule HMServerWeb.AuthenticationTest do
       end
     end
   end
+
+  describe "authenticate" do
+    test "halts the connection when credentials are invalid", %{conn: conn} do
+      assert true == HMServerWeb.Authentication.authenticate(conn, "unknown", "unknown").halted
+    end
+
+    test "returns the connection unmodified when the credentials are valid", %{conn: conn} do
+      insert!(:credential)
+      assert conn == HMServerWeb.Authentication.authenticate(conn, default_user(), default_password())
+    end
+  end
 end

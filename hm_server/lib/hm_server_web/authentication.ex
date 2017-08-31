@@ -15,4 +15,11 @@ defmodule HMServerWeb.Authentication do
       _ -> raise ArgumentError, "The `authorization` header does not contain a valid user."
     end
   end
+
+  def authenticate(conn, user, secret) do
+    case HMServer.Credential.is_valid(user, secret) do
+      true -> conn
+      _ -> conn |> halt
+    end
+  end
 end
