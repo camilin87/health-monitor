@@ -13,7 +13,7 @@ defmodule HMServerWeb.ApiClientController do
   defp credential_json(client) do
     %{
       id: client.client_id,
-      is_enabled: !client.client_disabled
+      is_enabled: !client.disabled
     }
   end
 end

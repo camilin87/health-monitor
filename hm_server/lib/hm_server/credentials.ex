@@ -9,7 +9,7 @@ defmodule HMServer.Credential do
   schema "api_credentials" do
     field :client_id, :string
     field :secret_key, :string
-    field :client_disabled, :boolean
+    field :disabled, :boolean
 
     timestamps()
   end
@@ -18,7 +18,7 @@ defmodule HMServer.Credential do
   def is_valid("", _), do: false
   def is_valid(_, ""), do: false
   def is_valid(user, secret) do
-    query = %{client_id: user, secret_key: secret, client_disabled: false}
+    query = %{client_id: user, secret_key: secret, disabled: false}
 
     case HMServer.Credential |> Repo.get_by(query) do
       %HMServer.Credential{} -> true

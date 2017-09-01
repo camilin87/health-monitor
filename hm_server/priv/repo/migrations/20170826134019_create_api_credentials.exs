@@ -5,7 +5,7 @@ defmodule HMServer.Repo.Migrations.CreateApiCredentials do
     create table(:api_credentials) do
       add :client_id, :string, size: 256, null: false
       add :secret_key, :string, size: 256, null: false
-      add :client_disabled, :boolean, default: false
+      add :disabled, :boolean, default: false
 
       timestamps()
     end

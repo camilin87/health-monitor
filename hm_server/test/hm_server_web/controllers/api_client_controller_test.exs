@@ -8,7 +8,7 @@ defmodule HMServerWeb.ApiClientControllerTest do
 
   test "GET /api/clients returns the credentials list", %{conn: conn} do
     insert!(:credential, %{client_id: "test0"})
-    insert!(:credential, %{client_id: "test1", client_disabled: true})
+    insert!(:credential, %{client_id: "test1", disabled: true})
     insert!(:credential, %{client_id: "test2"})
 
     conn = get conn, "/api/clients"

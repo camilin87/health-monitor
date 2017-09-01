@@ -23,7 +23,7 @@ defmodule HMServer.CredentialTest do
     end
 
     test "false when the credential is disabled" do
-      insert!(:credential, %{client_disabled: true})
+      insert!(:credential, %{disabled: true})
 
       assert false == is_valid(default_user(), default_password())
     end

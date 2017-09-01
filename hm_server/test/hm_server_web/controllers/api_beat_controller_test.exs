@@ -28,7 +28,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
   end
 
   test "POST /api/beat fails when credentials are disabled", %{conn: conn} do
-    insert!(:credential, %{client_disabled: true})
+    insert!(:credential, %{disabled: true})
 
     conn = conn
     |> authenticate

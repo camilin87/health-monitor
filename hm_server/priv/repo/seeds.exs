@@ -33,7 +33,7 @@ end
 [
   %HMServer.Credential{client_id: "test", secret_key: "111111"},
   %HMServer.Credential{client_id: "sample", secret_key: "aaaaa"},
-  %HMServer.Credential{client_id: "invalid", secret_key: "111111", client_disabled: true}
+  %HMServer.Credential{client_id: "invalid", secret_key: "111111", disabled: true}
 ]
 |> Enum.each(SeedHelper.insert)
 

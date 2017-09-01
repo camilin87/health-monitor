@@ -7,7 +7,7 @@ defmodule HMServer.Factory do
     %HMServer.Credential{
       client_id: default_user(),
       secret_key: default_password(),
-      client_disabled: false
+      disabled: false
     }
   end
 
