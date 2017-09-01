@@ -2,7 +2,6 @@ defmodule HMServer.NodeTest do
   use HMServerWeb.ConnCase
 
   alias HMServer.Repo, as: Repo
-  import HMServer.Node
 
   describe "update!" do
     defp validate!(item, params) do
@@ -29,14 +28,14 @@ defmodule HMServer.NodeTest do
     test "returns the item unmodified when it is disabled" do
       node = build(:node, %{failure_count: 2, node_disabled: true})
 
-      assert node == node |> update!
+      assert node == node |> HMServer.Node.update!
     end
 
     test "inserts a new item" do
       cred = insert!(:credential)
       node = build(:node, %{credential: cred})
 
-      assert inserted_node = node |> update!
+      assert inserted_node = node |> HMServer.Node.update!
       inserted_node |> validate!(expected_params())
 
       assert repo_node = HMServer.Node |> Repo.get_by!(%{id: inserted_node.id})
@@ -49,7 +48,7 @@ defmodule HMServer.NodeTest do
       insert!(:node, %{credential: cred, failure_count: 2})
       node = HMServer.Node |> Repo.get_by!(hostname: default_hostname())
 
-      assert inserted_node = node |> update!
+      assert inserted_node = node |> HMServer.Node.update!
       inserted_node |> validate!(expected_params())
 
       assert repo_node = HMServer.Node |> Repo.get_by!(%{id: inserted_node.id})
