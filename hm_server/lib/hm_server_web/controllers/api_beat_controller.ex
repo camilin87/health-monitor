@@ -1,6 +1,5 @@
 defmodule HMServerWeb.ApiBeatController do
   use HMServerWeb, :controller
-  alias HMServer.Repo, as: Repo
   alias HMServerWeb.Authentication, as: Authentication
 
   plug BasicAuth, [
