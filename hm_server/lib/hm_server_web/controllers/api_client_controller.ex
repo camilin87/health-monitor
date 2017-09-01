@@ -1,9 +1,10 @@
 defmodule HMServerWeb.ApiClientController do
   use HMServerWeb, :controller
+  alias HMServer.Repo, as: Repo
 
   def index(conn, _params) do
     json_result = HMServer.Credential
-    |> HMServer.Repo.all
+    |> Repo.all
     |> Enum.map(&credential_json/1)
 
     json conn, json_result

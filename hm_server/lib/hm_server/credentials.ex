@@ -4,6 +4,7 @@ defmodule HMServer.Credential do
   """
 
   use Ecto.Schema
+  alias HMServer.Repo, as: Repo
 
   schema "api_credentials" do
     field :client_id, :string
@@ -19,7 +20,7 @@ defmodule HMServer.Credential do
   def is_valid(user, secret) do
     query = %{client_id: user, secret_key: secret, client_disabled: false}
 
-    case HMServer.Repo.get_by(HMServer.Credential, query) do
+    case HMServer.Credential |> Repo.get_by(query) do
       %HMServer.Credential{} -> true
       _ -> false
     end

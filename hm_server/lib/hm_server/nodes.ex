@@ -4,6 +4,8 @@ defmodule HMServer.Node do
   """
 
   use Ecto.Schema
+  alias Ecto.Changeset, as: Changeset
+  alias HMServer.Repo, as: Repo
 
   schema "api_client_nodes" do
     field :hostname, :string
@@ -24,8 +26,8 @@ defmodule HMServer.Node do
         fieldnames = [:failure_count, :last_beat]
 
         item
-        |> Ecto.Changeset.cast(changes, fieldnames)
-        |> HMServer.Repo.insert_or_update!
+        |> Changeset.cast(changes, fieldnames)
+        |> Repo.insert_or_update!
     end
   end
 end

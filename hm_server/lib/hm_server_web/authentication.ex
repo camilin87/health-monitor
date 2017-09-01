@@ -6,6 +6,7 @@ defmodule HMServerWeb.Authentication do
   """
 
   import Plug.Conn
+  alias HMServer.Credential, as: Credential
 
   def read_user!(conn) do
     case get_req_header(conn, "authorization") do
@@ -23,7 +24,7 @@ defmodule HMServerWeb.Authentication do
   end
 
   def authenticate(conn, user, secret) do
-    case HMServer.Credential.is_valid(user, secret) do
+    case Credential.is_valid(user, secret) do
       true -> conn
       _ -> conn |> halt
     end
