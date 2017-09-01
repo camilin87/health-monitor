@@ -31,6 +31,19 @@ defmodule HMServerWeb.AuthenticationTest do
     end
   end
 
+  describe "read_credential!" do
+    test "reads the credential", %{conn: conn} do
+      seeded_cred = insert!(:credential)
+
+      assert cred = conn
+      |> authenticate
+      |> HMServerWeb.Authentication.read_credential!
+
+      assert seeded_cred.id == cred.id
+      assert seeded_cred.client_id == cred.client_id
+    end
+  end
+
   describe "authenticate" do
     test "halts the connection when credentials are invalid", %{conn: conn} do
       assert true == HMServerWeb.Authentication.authenticate(conn, "unknown", "unknown").halted

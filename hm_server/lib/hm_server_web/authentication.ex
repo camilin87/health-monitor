@@ -7,6 +7,14 @@ defmodule HMServerWeb.Authentication do
 
   import Plug.Conn
   alias HMServer.Credential, as: Credential
+  alias HMServer.Repo, as: Repo
+
+  def read_credential!(conn) do
+    client_id = conn |> read_user!
+
+    HMServer.Credential
+    |> Repo.get_by!(client_id: client_id)
+  end
 
   def read_user!(conn) do
     case get_req_header(conn, "authorization") do
