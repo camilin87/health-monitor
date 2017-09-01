@@ -18,6 +18,20 @@ defmodule HMServer.Node do
     timestamps()
   end
 
+  def get_by!(hostname, credential) do
+    query = %{hostname: hostname, credential_id: credential.id}
+    case HMServer.Node |> Repo.get_by(query) do
+      nil -> %HMServer.Node{
+        hostname: hostname,
+        last_beat: DateTime.utc_now,
+        failure_count: 0,
+        node_disabled: false,
+        credential: credential
+      }
+      existing_node -> existing_node
+    end
+  end
+
   def update!(item) do
     case item.node_disabled do
       true -> item
