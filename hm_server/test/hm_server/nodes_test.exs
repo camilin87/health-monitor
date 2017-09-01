@@ -4,15 +4,15 @@ defmodule HMServer.NodeTest do
   alias HMServer.Repo, as: Repo
   import HMServer.Node
 
-  defp validate!(item, params) do
-    assert params.hostname == item.hostname
-    assert 0 == params.last_beat |> DateTime.diff(item.last_beat)
-    assert params.failure_count == item.failure_count
-    assert params.node_disabled == item.node_disabled
-    assert params.credential_id == item.credential_id
-  end
-
   describe "update!" do
+    defp validate!(item, params) do
+      assert params.hostname == item.hostname
+      assert 0 == params.last_beat |> DateTime.diff(item.last_beat)
+      assert params.failure_count == item.failure_count
+      assert params.node_disabled == item.node_disabled
+      assert params.credential_id == item.credential_id
+    end
+
     defp expected_params() do
       cred = HMServer.Credential
       |> Repo.get_by(%{client_id: default_user()})
