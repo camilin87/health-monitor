@@ -11,7 +11,7 @@ defmodule HMServer.Node do
     field :hostname, :string
     field :last_beat, :utc_datetime
     field :failure_count, :integer
-    field :node_disabled, :boolean
+    field :disabled, :boolean
 
     belongs_to :credential, HMServer.Credential
 
@@ -25,7 +25,7 @@ defmodule HMServer.Node do
         hostname: hostname,
         last_beat: DateTime.utc_now,
         failure_count: 0,
-        node_disabled: false,
+        disabled: false,
         credential: credential
       }
       existing_node -> existing_node
@@ -33,7 +33,7 @@ defmodule HMServer.Node do
   end
 
   def update!(item) do
-    case item.node_disabled do
+    case item.disabled do
       true -> item
       false ->
         changes = %{failure_count: 0, last_beat: DateTime.utc_now}

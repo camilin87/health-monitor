@@ -7,7 +7,7 @@ defmodule HMServer.NodeTest do
     assert params.hostname == item.hostname
     assert 0 == params.last_beat |> DateTime.diff(item.last_beat)
     assert params.failure_count == item.failure_count
-    assert params.node_disabled == item.node_disabled
+    assert params.disabled == item.disabled
     assert params.credential_id == item.credential_id
 
     item
@@ -23,7 +23,7 @@ defmodule HMServer.NodeTest do
         hostname: "new_host",
         last_beat: DateTime.utc_now,
         failure_count: 0,
-        node_disabled: false,
+        disabled: false,
         credential_id: nil
       })
       assert cred == node.credential
@@ -33,14 +33,14 @@ defmodule HMServer.NodeTest do
       insert!(:credential, %{client_id: "ignored"})
       cred = insert!(:credential)
       insert!(:node, %{credential: cred, hostname: "ignored"})
-      insert!(:node, %{credential: cred, failure_count: 2, node_disabled: true})
+      insert!(:node, %{credential: cred, failure_count: 2, disabled: true})
 
       HMServer.Node.get_by!(default_hostname(), cred)
       |> validate!(%{
         hostname: default_hostname(),
         last_beat: DateTime.utc_now,
         failure_count: 2,
-        node_disabled: true,
+        disabled: true,
         credential_id: cred.id
       })
     end
@@ -55,13 +55,13 @@ defmodule HMServer.NodeTest do
         hostname: default_hostname(),
         last_beat: DateTime.utc_now,
         failure_count: 0,
-        node_disabled: false,
+        disabled: false,
         credential_id: cred.id
       }
     end
 
     test "returns the item unmodified when it is disabled" do
-      node = build(:node, %{failure_count: 2, node_disabled: true})
+      node = build(:node, %{failure_count: 2, disabled: true})
 
       assert node == node |> HMServer.Node.update!
     end
@@ -77,7 +77,6 @@ defmodule HMServer.NodeTest do
       repo_node |> validate!(expected_params())
     end
 
-    @tag :wip
     test "updates an existing item" do
       cred = insert!(:credential)
       insert!(:node, %{credential: cred, failure_count: 2})

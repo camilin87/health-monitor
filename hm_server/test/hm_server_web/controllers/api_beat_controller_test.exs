@@ -70,7 +70,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert default_hostname() == node.hostname
     assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
     assert 0 == node.failure_count
-    assert false == node.node_disabled
+    assert false == node.disabled
     assert cred.id == node.credential_id
   end
 
@@ -92,14 +92,14 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert default_hostname() == node.hostname
     assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
     assert 0 == node.failure_count
-    assert false == node.node_disabled
+    assert false == node.disabled
     assert cred.id == node.credential_id
   end
 
   test "POST /api/beat does not update disabled nodes", %{conn: conn} do
     cred = insert!(:credential)
     insert!(:node, [
-      node_disabled: true,
+      disabled: true,
       failure_count: 2,
       credential: cred
     ])
@@ -113,7 +113,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert default_hostname() == node.hostname
     assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
     assert 2 == node.failure_count
-    assert true == node.node_disabled
+    assert true == node.disabled
     assert cred.id == node.credential_id
   end
 end

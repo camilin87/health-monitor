@@ -16,7 +16,7 @@ defmodule HMServer.Factory do
       hostname: default_hostname(),
       last_beat: DateTime.utc_now,
       failure_count: 0,
-      node_disabled: false
+      disabled: false
     }
   end
 

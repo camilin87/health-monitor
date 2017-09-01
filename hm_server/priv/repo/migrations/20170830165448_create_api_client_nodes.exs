@@ -6,7 +6,7 @@ defmodule HMServer.Repo.Migrations.CreateApiClientNodes do
       add :hostname, :string, size: 256, null: false
       add :last_beat, :utc_datetime, null: false
       add :failure_count, :integer, null: false, default: 0
-      add :node_disabled, :boolean, default: false
+      add :disabled, :boolean, default: false
 
       add :credential_id, references(:api_credentials), null: false
 
