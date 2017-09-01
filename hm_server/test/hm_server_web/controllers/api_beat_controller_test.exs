@@ -3,6 +3,15 @@ defmodule HMServerWeb.ApiBeatControllerTest do
 
   defp send_hostname(hostname \\ default_hostname()), do: [hostname: hostname] 
 
+  defp validate_node!(params) do
+    assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: params.hostname)
+    assert params.hostname == node.hostname
+    assert 0 == params.last_beat |> DateTime.diff(node.last_beat)
+    assert params.failure_count == node.failure_count
+    assert params.disabled == node.disabled
+    assert params.credential_id == node.credential_id
+  end
+
   test "POST /api/beat fails when no credentials are provided", %{conn: conn} do
     conn = post conn, "/api/beat", send_hostname()
 
@@ -66,12 +75,13 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     |> post("/api/beat", send_hostname())
 
     assert json_response(conn, 200) == %{"success" => true}
-    assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
-    assert default_hostname() == node.hostname
-    assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
-    assert 0 == node.failure_count
-    assert false == node.disabled
-    assert cred.id == node.credential_id
+    validate_node!(%{
+      hostname: default_hostname(),
+      last_beat: DateTime.utc_now,
+      failure_count: 0,
+      disabled: false,
+      credential_id: cred.id
+    })
   end
 
   test "POST /api/beat updates the node on consequent beats", %{conn: conn} do
@@ -88,12 +98,13 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     |> post("/api/beat", send_hostname())
 
     assert json_response(conn, 200) == %{"success" => true}
-    assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
-    assert default_hostname() == node.hostname
-    assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
-    assert 0 == node.failure_count
-    assert false == node.disabled
-    assert cred.id == node.credential_id
+    validate_node!(%{
+      hostname: default_hostname(),
+      last_beat: DateTime.utc_now,
+      failure_count: 0,
+      disabled: false,
+      credential_id: cred.id
+    })
   end
 
   test "POST /api/beat does not update disabled nodes", %{conn: conn} do
@@ -109,11 +120,18 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     |> post("/api/beat", send_hostname())
 
     assert json_response(conn, 200) == %{"success" => true}
-    assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
-    assert default_hostname() == node.hostname
-    assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
-    assert 2 == node.failure_count
-    assert true == node.disabled
-    assert cred.id == node.credential_id
+    # assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: default_hostname())
+    # assert default_hostname() == node.hostname
+    # assert 0 == DateTime.utc_now |> DateTime.diff(node.last_beat)
+    # assert 2 == node.failure_count
+    # assert true == node.disabled
+    # assert cred.id == node.credential_id
+    validate_node!(%{
+      hostname: default_hostname(),
+      last_beat: DateTime.utc_now,
+      failure_count: 2,
+      disabled: true,
+      credential_id: cred.id
+    })
   end
 end
