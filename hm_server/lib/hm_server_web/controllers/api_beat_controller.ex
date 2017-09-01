@@ -8,11 +8,7 @@ defmodule HMServerWeb.ApiBeatController do
   ] when action in [:create]
 
   def create(conn, %{"hostname" => hostname}) do
-    client_id = conn |> Authentication.read_user!
-
-    credential = HMServer.Credential
-    |> Repo.get_by!(client_id: client_id)
-
+    credential = conn |> Authentication.read_credential!
     node = HMServer.Node.get_by!(hostname, credential)
 
     node |> HMServer.Node.update!
