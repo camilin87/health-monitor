@@ -10,10 +10,9 @@ defmodule HMServerWeb.Authentication do
   alias HMServer.Repo, as: Repo
 
   def read_credential!(conn) do
-    client_id = conn |> read_user!
-
-    HMServer.Credential
-    |> Repo.get_by!(client_id: client_id)
+    conn
+    |> read_user!
+    |> Credential.get_by!
   end
 
   def read_user!(conn) do
