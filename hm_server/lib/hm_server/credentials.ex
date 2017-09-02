@@ -4,6 +4,7 @@ defmodule HMServer.Credential do
   """
 
   use Ecto.Schema
+  require Logger
   alias HMServer.Repo, as: Repo
 
   schema "api_credentials" do
@@ -18,11 +19,22 @@ defmodule HMServer.Credential do
   def is_valid("", _), do: false
   def is_valid(_, ""), do: false
   def is_valid(user, secret) do
-    query = %{client_id: user, secret_key: secret, disabled: false}
+    query = %{client_id: user, secret_key: secret}
 
     case HMServer.Credential |> Repo.get_by(query) do
-      %HMServer.Credential{} -> true
-      _ -> false
+      nil -> false
+      credential -> credential |> is_valid_credential
+    end
+  end
+
+  defp is_valid_credential(credential) do
+    case credential.disabled do
+      true ->
+        Logger.info "HMServer.Credential.is_valid_credential - Received disabled credential; credential_id=#{credential.id}; result=false;"
+        false
+      _ ->
+        Logger.info "HMServer.Credential.is_valid_credential - Found valid credential; credential_id=#{credential.id}; result=true;"
+        true
     end
   end
 
