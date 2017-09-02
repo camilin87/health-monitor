@@ -4,6 +4,7 @@ defmodule HMServer.Node do
   """
 
   use Ecto.Schema
+  require Logger
   alias Ecto.Changeset, as: Changeset
   alias HMServer.Repo, as: Repo
 
@@ -34,8 +35,11 @@ defmodule HMServer.Node do
 
   def update!(item) do
     case item.disabled do
-      true -> item
+      true ->
+        Logger.info "HMServer.Node.update! - Received beat from disabled node; hostname=#{item.hostname}; credential_id=#{item.credential_id};"
+        item
       false ->
+        Logger.info "HMServer.Node.update! - Updating node; hostname=#{item.hostname}; credential_id=#{item.credential_id};"
         changes = %{failure_count: 0, last_beat: DateTime.utc_now}
         fieldnames = [:failure_count, :last_beat]
 
