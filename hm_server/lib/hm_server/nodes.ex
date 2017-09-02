@@ -36,10 +36,10 @@ defmodule HMServer.Node do
   def update!(item) do
     case item.disabled do
       true ->
-        Logger.info "HMServer.Node.update! - Received beat from disabled node; hostname=#{item.hostname}; credential_id=#{item.credential_id};"
+        Logger.info "HMServer.Node.update! - Received beat from disabled node; hostname=#{item.hostname}; credential_id=#{item.credential_id}; result=false;"
         item
       false ->
-        Logger.info "HMServer.Node.update! - Updating node; hostname=#{item.hostname}; credential_id=#{item.credential_id};"
+        Logger.info "HMServer.Node.update! - Updating node; hostname=#{item.hostname}; credential_id=#{item.credential_id}; result=true;"
         changes = %{failure_count: 0, last_beat: DateTime.utc_now}
         fieldnames = [:failure_count, :last_beat]
 
