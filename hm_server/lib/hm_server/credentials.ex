@@ -25,4 +25,9 @@ defmodule HMServer.Credential do
       _ -> false
     end
   end
+
+  def get_by!(client_id) do
+    HMServer.Credential
+    |> Repo.get_by!(client_id: client_id)
+  end
 end

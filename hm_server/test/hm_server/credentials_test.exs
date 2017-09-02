@@ -34,4 +34,21 @@ defmodule HMServer.CredentialTest do
       assert true == is_valid(default_user(), default_password())
     end
   end
+
+  describe "get_by!" do
+    test "returns the credential with the specified client_id" do
+      seeded_cred = insert!(:credential)
+
+      assert cred = get_by!(default_user())
+
+      assert seeded_cred.id == cred.id
+      assert seeded_cred.client_id == cred.client_id
+    end
+
+    test "fails when the credential is not found" do
+      assert_raise Ecto.NoResultsError, fn ->
+        get_by!(default_user())
+      end
+    end
+  end
 end
