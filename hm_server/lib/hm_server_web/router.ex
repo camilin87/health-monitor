@@ -23,6 +23,7 @@ defmodule HMServerWeb.Router do
   scope "/api", HMServerWeb do
     pipe_through :api
 
+    resources "/status", ApiStatusController, only: [:index]
     resources "/clients", ApiClientController, only: [:index]
     resources "/beat", ApiBeatController, only: [:create]
   end
