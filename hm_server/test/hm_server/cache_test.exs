@@ -4,10 +4,6 @@ defmodule HMServer.CacheTest do
   alias HMServer.Cache, as: Cache
 
   describe "get_or_store" do
-    setup do
-      clear_cache()
-    end
-
     test "calls the store function when the value is not in the cache" do
       assert 15 == Cache.get_or_store("k1", fn -> 15 end)
     end

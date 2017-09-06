@@ -3,10 +3,6 @@ defmodule HMServer.CredentialTest do
 
   import HMServer.Credential
 
-  setup do
-    clear_cache()
-  end
-
   describe "is_valid" do
     test "false when incomplete credentials provided" do
       assert false == is_valid("", "")

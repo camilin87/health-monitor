@@ -34,6 +34,7 @@ defmodule HMServerWeb.ConnCase do
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(HMServer.Repo, {:shared, self()})
     end
+    {:ok, _} = Cachex.clear(:api_cache)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
@@ -43,10 +44,5 @@ defmodule HMServerWeb.ConnCase do
   def authenticate(conn, username \\ default_user(), password \\ default_password()) do
     header_content = "Basic " <> Base.encode64("#{username}:#{password}")
     conn |> put_req_header("authorization", header_content)
-  end
-
-  def clear_cache() do
-    {:ok, _} = Cachex.clear(:api_cache)
-    :ok
   end
 end

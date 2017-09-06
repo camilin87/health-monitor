@@ -2,10 +2,6 @@ defmodule HMServerWeb.ApiStatusControllerTest do
   use HMServerWeb.ConnCase
   alias HMServer.Repo, as: Repo
 
-  setup do
-    clear_cache()
-  end
-
   test "GET /api/status returns ok", %{conn: conn} do
     conn = get conn, "/api/status"
 

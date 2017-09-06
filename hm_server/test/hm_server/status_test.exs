@@ -5,10 +5,6 @@ defmodule HMServer.StatusTest do
   alias HMServer.Repo, as: Repo
 
   describe "online?" do
-    setup do
-      clear_cache()
-    end
-
     test "returns false when db is empty" do
       HMServer.Status
       |> Repo.delete_all
