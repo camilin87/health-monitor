@@ -41,6 +41,7 @@ defmodule HMServer.Mixfile do
       {:cowboy, "~> 1.0"},
       {:basic_auth, "~> 2.1"},
       {:cachex, "~> 2.1"},
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.8.6", only: [:dev, :test], runtime: false},
     ]
   end
