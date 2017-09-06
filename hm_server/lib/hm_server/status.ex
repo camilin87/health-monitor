@@ -6,6 +6,7 @@ defmodule HMServer.Status do
   use Ecto.Schema
   require Logger
   alias HMServer.Repo, as: Repo
+  alias HMServer.Cache, as: Cache
 
   schema "api_status" do
     field :disabled, :boolean
@@ -14,13 +15,7 @@ defmodule HMServer.Status do
   end
 
   def online? do
-    case Cachex.get(:api_cache, "HMServer.Status.online?") do
-      {:ok, result} -> result
-      _ ->
-        result = read_db_status()
-        Cachex.set!(:api_cache, "HMServer.Status.online?", result, [ ttl: :timer.seconds(5) ])
-        result
-    end
+    Cache.get_or_store("HMServer.Status.online?", &read_db_status/0)
   end
 
   defp read_db_status do
