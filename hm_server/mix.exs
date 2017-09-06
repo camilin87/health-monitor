@@ -37,10 +37,10 @@ defmodule HMServer.Mixfile do
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
-      {:credo, "~> 0.8.6", only: [:dev, :test], runtime: false},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:basic_auth, "~> 2.1"}
+      {:basic_auth, "~> 2.1"},
+      {:credo, "~> 0.8.6", only: [:dev, :test], runtime: false},
     ]
   end
 
