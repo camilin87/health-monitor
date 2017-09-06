@@ -5,7 +5,7 @@ defmodule HMServer.NodeTest do
 
   defp validate!(item, params) do
     assert params.hostname == item.hostname
-    assert 0 == params.last_beat |> DateTime.diff(item.last_beat)
+    assert datetimes_match(params.last_beat, item.last_beat)
     assert params.failure_count == item.failure_count
     assert params.disabled == item.disabled
     assert params.credential_id == item.credential_id

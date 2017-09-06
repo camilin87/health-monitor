@@ -45,4 +45,8 @@ defmodule HMServerWeb.ConnCase do
     header_content = "Basic " <> Base.encode64("#{username}:#{password}")
     conn |> put_req_header("authorization", header_content)
   end
+
+  def datetimes_match(dt1, dt2) do
+    DateTime.diff(dt1, dt2) <= 1
+  end
 end

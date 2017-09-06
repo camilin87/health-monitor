@@ -13,7 +13,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
 
     assert node = HMServer.Node |> HMServer.Repo.get_by!(hostname: params.hostname)
     assert params.hostname == node.hostname
-    assert 0 == params.last_beat |> DateTime.diff(node.last_beat)
+    assert datetimes_match(params.last_beat, node.last_beat)
     assert params.failure_count == node.failure_count
     assert params.disabled == node.disabled
     assert params.credential_id == node.credential_id
