@@ -34,3 +34,16 @@ Saves a hearbeat from a host. Anything but a `200` should be considered an error
 This endpoint requires an `api_key` and `api_secret` to be transmitted in compliance with the [Basic HTTP Authentication Scheme](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme).  
 
 The `hostname` field is the name of the node to monitor. An alert will be triggered if the node has stayed silent for a long period of time.
+
+# Stress testing  
+
+```bash
+echo "hostname=node" > .tmp && \
+ab -A 'test:111111' \
+    -T 'application/x-www-form-urlencoded' \
+    -p .tmp \
+    -n 100000 \
+    -c 100 \
+    http://127.0.0.1:4000/api/beat \
+&& rm .tmp
+```
