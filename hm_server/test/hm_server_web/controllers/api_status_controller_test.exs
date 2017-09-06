@@ -19,4 +19,17 @@ defmodule HMServerWeb.ApiStatusControllerTest do
 
     assert false == json_response(conn, 503)["success"]
   end
+
+  test "GET /api/status caches responses for a short period of time", %{conn: conn} do
+    Cachex.clear(:api_cache)
+
+    conn = get conn, "/api/status"
+    assert true == json_response(conn, 200)["success"]
+
+    HMServer.Status
+    |> Repo.delete_all
+
+    conn = get conn, "/api/status"
+    assert true == json_response(conn, 200)["success"]
+  end
 end
