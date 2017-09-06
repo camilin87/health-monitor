@@ -14,6 +14,16 @@ defmodule HMServer.Status do
   end
 
   def online? do
+    case Cachex.get(:api_cache, "HMServer.Status.online?") do
+      {:ok, result} -> result
+      _ ->
+        result = read_db_status()
+        Cachex.set!(:api_cache, "HMServer.Status.online?", result, [ ttl: :timer.seconds(5) ])
+        result
+    end
+  end
+
+  defp read_db_status do
     case HMServer.Status |> Repo.one do
       nil ->
         Logger.info "HMServer.Status.online? - Api is disabled; result=false;"
