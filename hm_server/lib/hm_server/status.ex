@@ -4,6 +4,7 @@ defmodule HMServer.Status do
   """
 
   use Ecto.Schema
+  require Logger
   alias HMServer.Repo, as: Repo
 
   schema "api_status" do
@@ -14,8 +15,12 @@ defmodule HMServer.Status do
 
   def online? do
     case HMServer.Status |> Repo.one do
-      nil -> false
-      %HMServer.Status{disabled: true} -> false
+      nil ->
+        Logger.info "HMServer.Status.online? - Api is disabled; result=false;"
+        false
+      %HMServer.Status{disabled: true} ->
+        Logger.info "HMServer.Status.online? - Api is manually disabled; result=true;"
+        false
       _ -> true
     end
   end
