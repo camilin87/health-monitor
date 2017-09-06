@@ -44,4 +44,9 @@ defmodule HMServerWeb.ConnCase do
     header_content = "Basic " <> Base.encode64("#{username}:#{password}")
     conn |> put_req_header("authorization", header_content)
   end
+
+  def clear_cache() do
+    {:ok, _} = Cachex.clear(:api_cache)
+    :ok
+  end
 end

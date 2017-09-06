@@ -20,8 +20,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
   end
 
   setup do
-    {:ok, _} = Cachex.clear(:api_cache)
-    :ok
+    clear_cache()
   end
 
   test "POST /api/beat fails when no credentials are provided", %{conn: conn} do

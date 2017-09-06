@@ -5,8 +5,7 @@ defmodule HMServer.CacheTest do
 
   describe "get_or_store" do
     setup do
-      {:ok, _ } = Cachex.clear(:api_cache)
-      :ok
+      clear_cache()
     end
 
     test "calls the store function when the value is not in the cache" do

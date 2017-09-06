@@ -5,8 +5,11 @@ defmodule HMServer.StatusTest do
   alias HMServer.Repo, as: Repo
 
   describe "online?" do
+    setup do
+      clear_cache()
+    end
+
     test "returns false when db is empty" do
-      Cachex.clear(:api_cache)
       HMServer.Status
       |> Repo.delete_all
 
@@ -14,7 +17,6 @@ defmodule HMServer.StatusTest do
     end
 
     test "returns false when the service is disabled" do
-      Cachex.clear(:api_cache)
       HMServer.Status
       |> Repo.delete_all
 
@@ -25,7 +27,6 @@ defmodule HMServer.StatusTest do
     end
 
     test "returns true when the service is enabled" do
-      Cachex.clear(:api_cache)
       HMServer.Status
       |> Repo.delete_all
 
@@ -36,8 +37,6 @@ defmodule HMServer.StatusTest do
     end
 
     test "caches the results for a short period of time" do
-      Cachex.clear(:api_cache)
-
       assert true == Status.online?
 
       HMServer.Status

@@ -4,8 +4,7 @@ defmodule HMServer.CredentialTest do
   import HMServer.Credential
 
   setup do
-    {:ok, _} = Cachex.clear(:api_cache)
-    :ok
+    clear_cache()
   end
 
   describe "is_valid" do
