@@ -19,6 +19,11 @@ defmodule HMServerWeb.ApiBeatControllerTest do
     assert params.credential_id == node.credential_id
   end
 
+  setup do
+    {:ok, _} = Cachex.clear(:api_cache)
+    :ok
+  end
+
   test "POST /api/beat fails when no credentials are provided", %{conn: conn} do
     conn = post conn, "/api/beat", send_hostname()
 

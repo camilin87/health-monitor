@@ -3,6 +3,11 @@ defmodule HMServer.CredentialTest do
 
   import HMServer.Credential
 
+  setup do
+    {:ok, _} = Cachex.clear(:api_cache)
+    :ok
+  end
+
   describe "is_valid" do
     test "false when incomplete credentials provided" do
       assert false == is_valid("", "")
@@ -32,6 +37,25 @@ defmodule HMServer.CredentialTest do
       insert!(:credential)
 
       assert true == is_valid(default_user(), default_password())
+    end
+
+    test "caches the result for a short period of time" do
+      assert false == is_valid(default_user(), default_password())
+
+      insert!(:credential)
+
+      assert false == is_valid(default_user(), default_password())
+    end
+
+    test "cache is user and secret specific" do
+      assert false == is_valid(default_user(), default_password())
+
+      insert!(:credential)
+      insert!(:credential, %{client_id: "aaaaaaa"})
+
+      assert false == is_valid(default_user(), default_password())
+      assert true == is_valid("aaaaaaa", default_password())
+      assert false == is_valid("aaaaaaa", "incorrect")
     end
   end
 

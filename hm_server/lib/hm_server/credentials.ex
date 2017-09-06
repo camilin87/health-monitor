@@ -6,6 +6,7 @@ defmodule HMServer.Credential do
   use Ecto.Schema
   require Logger
   alias HMServer.Repo, as: Repo
+  alias HMServer.Cache, as: Cache
 
   schema "api_credentials" do
     field :client_id, :string
@@ -19,6 +20,19 @@ defmodule HMServer.Credential do
   def is_valid("", _), do: false
   def is_valid(_, ""), do: false
   def is_valid(user, secret) do
+    store_func = fn ->
+      read_db_is_valid(user, secret)
+    end
+    key = is_valid_cache_key(user, secret)
+    Cache.get_or_store(key, store_func)
+  end
+
+  defp is_valid_cache_key(user, secret) do
+    suffix = Base.encode64("#{user}:#{secret}")
+    "HMServer.Credential.is_valid.#{suffix}"
+  end
+
+  defp read_db_is_valid(user, secret) do
     query = %{client_id: user, secret_key: secret}
 
     case HMServer.Credential |> Repo.get_by(query) do
