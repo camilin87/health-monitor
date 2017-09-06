@@ -7,7 +7,6 @@ defmodule HMServerWeb.Authentication do
 
   import Plug.Conn
   alias HMServer.Credential, as: Credential
-  alias HMServer.Repo, as: Repo
 
   def read_credential!(conn) do
     conn
