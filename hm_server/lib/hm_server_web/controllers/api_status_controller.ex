@@ -10,8 +10,7 @@ defmodule HMServerWeb.ApiStatusController do
     end
 
     conn
-        |> put_status(service_status)
-        |> json(%{success: service_online, timestamp: DateTime.utc_now})
-        |> halt
+      |> put_status(service_status)
+      |> json(%{success: service_online, timestamp: DateTime.utc_now})
   end
 end
