@@ -20,6 +20,7 @@ defmodule HMServer.Application do
       # Start your own worker by calling:
       #   HMServer.Worker.start_link(arg1, arg2, arg3)
       # worker(HMServer.Worker, [arg1, arg2, arg3]),
+      supervisor(Cachex, [:api_cache, []])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
