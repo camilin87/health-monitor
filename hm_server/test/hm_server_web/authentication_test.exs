@@ -61,5 +61,25 @@ defmodule HMServerWeb.AuthenticationTest do
       insert!(:credential)
       assert conn == HMServerWeb.Authentication.authenticate(conn, default_user(), default_password())
     end
+
+    test "rate limits the credential", %{conn: conn} do
+      reset_user_rate_limit("AAAAAA")
+      reset_user_rate_limit("BBBBBB")
+      insert!(:credential, %{client_id: "AAAAAA"})
+      insert!(:credential, %{client_id: "BBBBBB"})
+
+      1..5
+      |> Enum.to_list
+      |> Enum.each(fn _ ->
+        assert false == HMServerWeb.Authentication.authenticate(conn, "AAAAAA", default_password()).halted
+      end)
+      assert true == HMServerWeb.Authentication.authenticate(conn, "AAAAAA", default_password()).halted
+
+      1..5
+      |> Enum.to_list
+      |> Enum.each(fn _ ->
+        assert false == HMServerWeb.Authentication.authenticate(conn, "BBBBBB", default_password()).halted
+      end)
+    end
   end
 end

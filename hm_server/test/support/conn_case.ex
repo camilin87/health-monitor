@@ -35,6 +35,7 @@ defmodule HMServerWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(HMServer.Repo, {:shared, self()})
     end
     {:ok, _} = Cachex.clear(:api_cache)
+    reset_user_rate_limit()
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
@@ -48,5 +49,10 @@ defmodule HMServerWeb.ConnCase do
 
   def datetimes_match(dt1, dt2) do
     DateTime.diff(dt1, dt2) <= 1
+  end
+
+  def reset_user_rate_limit(user \\ HMServer.Factory.default_user()) do
+    bucket_id = HMServerWeb.Authentication.rate_limit_bucket_id(user)
+    ExRated.delete_bucket(bucket_id)
   end
 end

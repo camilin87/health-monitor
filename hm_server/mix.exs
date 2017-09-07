@@ -20,7 +20,7 @@ defmodule HMServer.Mixfile do
   def application do
     [
       mod: {HMServer.Application, []},
-      extra_applications: [:logger, :runtime_tools, :cachex]
+      extra_applications: [:logger, :runtime_tools, :cachex, :ex_rated]
     ]
   end
 
@@ -41,6 +41,7 @@ defmodule HMServer.Mixfile do
       {:cowboy, "~> 1.0"},
       {:basic_auth, "~> 2.1"},
       {:cachex, "~> 2.1"},
+      {:ex_rated, "~> 1.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.8.6", only: [:dev, :test], runtime: false},
     ]

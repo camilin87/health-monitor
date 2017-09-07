@@ -30,9 +30,29 @@ defmodule HMServerWeb.Authentication do
   end
 
   def authenticate(conn, user, secret) do
-    case Credential.is_valid(user, secret) do
-      true -> conn
-      _ -> conn |> halt
+    case is_valid(user, secret) do
+      false -> conn |> halt
+      _ -> conn
+    end
+  end
+
+  defp is_valid(user, secret) do
+    check_rate_limit(user) && Credential.is_valid(user, secret)
+  end
+
+  defp check_rate_limit(user) do
+    !rate_limit_exceeded?(user)
+  end
+
+  def rate_limit_bucket_id(user) do
+    "HMServer.Authentication.authenticate.#{user}"
+  end
+
+  defp rate_limit_exceeded?(user) do
+    key = rate_limit_bucket_id(user)
+    case ExRated.check_rate(key, 5_000, 5) do
+      {:ok, _} -> false
+      _ -> true
     end
   end
 end
