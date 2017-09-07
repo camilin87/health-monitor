@@ -23,11 +23,11 @@ defmodule HMServer.Credential do
     store_func = fn ->
       read_db_is_valid(user, secret)
     end
-    key = is_valid_cache_key(user, secret)
+    key = get_cache_key(user, secret)
     Cache.get_or_store(key, store_func)
   end
 
-  defp is_valid_cache_key(user, secret) do
+  defp get_cache_key(user, secret) do
     suffix = Base.encode64("#{user}:#{secret}")
     "HMServer.Credential.is_valid.#{suffix}"
   end
