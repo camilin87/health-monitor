@@ -6,6 +6,7 @@ defmodule HMServerWeb.Authentication do
   """
 
   import Plug.Conn
+  require Logger
   alias HMServer.Credential, as: Credential
 
   def read_credential!(conn) do
@@ -52,7 +53,9 @@ defmodule HMServerWeb.Authentication do
     key = rate_limit_bucket_id(user)
     case ExRated.check_rate(key, 5_000, 5) do
       {:ok, _} -> false
-      _ -> true
+      _ ->
+        Logger.debug "HMServerWeb.Authentication.rate_limit_exceeded? - Exceeded Limit; user=#{user};"
+        true
     end
   end
 end
