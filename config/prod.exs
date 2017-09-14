@@ -23,7 +23,7 @@ config :hm_server, HMServerWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :hello, HMServer.Repo,
+config :hm_server, HMServer.Repo,
   adapter: Ecto.Adapters.Postgres,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
