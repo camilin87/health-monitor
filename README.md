@@ -1,14 +1,6 @@
 # HMServer  
 
-To start your Phoenix server:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Start Phoenix endpoint with `mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+A Heartbeat system to monitor the health of remote clients  
 
 # Api Docs  
 
@@ -35,15 +27,5 @@ This endpoint requires an `api_key` and `api_secret` to be transmitted in compli
 
 The `hostname` field is the name of the node to monitor. An alert will be triggered if the node has stayed silent for a long period of time.
 
-# Stress testing  
-
-```bash
-echo "hostname=node" > .tmp && \
-ab -A 'test:111111' \
-    -T 'application/x-www-form-urlencoded' \
-    -p .tmp \
-    -n 100000 \
-    -c 100 \
-    http://127.0.0.1:4000/api/beat \
-&& rm .tmp
-```
+# [Development Docs](readme-dev.md)  
+# [Operational Guides](readme-ops.md)  
