@@ -17,3 +17,15 @@ Configure an environment variable with the Heroku app name
 ## Migrate the database  
 
     heroku run "POOL_SIZE=2 mix ecto.migrate" --app $HEROKU_APP
+
+## Create a Credential  
+
+_TODO_
+
+## Disable a Credential  
+
+_TODO_
+
+## Disable a Node  
+
+_TODO_
