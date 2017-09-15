@@ -1,4 +1,11 @@
 defmodule HMServer.Cache do
+  @moduledoc """
+  Encapsulates Cache access logic.
+
+  Simplifies the read from cache and if not found cache a value operation
+  into a single call to `get_or_store`
+  """
+
   def get_or_store(key, store_func, ttl \\ :short) do
     case Cachex.get(:api_cache, key) do
       {:ok, value} -> value
@@ -12,7 +19,7 @@ defmodule HMServer.Cache do
 
   defp cache_options(ttl) do
     seconds = ttl_to_seconds(ttl)
-    [ ttl: :timer.seconds(seconds) ]
+    [ttl: :timer.seconds(seconds)]
   end
 
   defp ttl_to_seconds(ttl) do

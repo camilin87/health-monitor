@@ -54,7 +54,9 @@ defmodule HMServerWeb.Authentication do
     case ExRated.check_rate(key, 5_000, 5) do
       {:ok, _} -> false
       _ ->
-        Logger.debug "HMServerWeb.Authentication.rate_limit_exceeded? - Exceeded Limit; user=#{user};"
+        Logger.debug fn ->
+          "HMServerWeb.Authentication.rate_limit_exceeded? - Exceeded Limit; user=#{user};"
+        end
         true
     end
   end
