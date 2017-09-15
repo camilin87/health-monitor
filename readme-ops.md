@@ -10,17 +10,17 @@ The following assumes the application is running on Heroku. The [following guide
 
 ## Remote Commands Prerequisites  
 
-Configure an environment variable with the Heroku app name  
+Configure an environment variable with the Heroku app name and set the `POOL_SIZE`  
 
-    HEROKU_APP=hmapi
+    HEROKU_APP=hmapi POOL_SIZE=2
 
 ## Migrate the database  
 
-    heroku run "POOL_SIZE=2 mix ecto.migrate" --app $HEROKU_APP
+    heroku run "mix ecto.migrate" --app $HEROKU_APP
 
 ## Create a Credential  
 
-    heroku run "POOL_SIZE=2 mix run priv/ops/create_credential.exs --client-id test --secret \"111111\"" --app $HEROKU_APP
+    heroku run "mix run priv/ops/create_credential.exs --client-id test --secret \"111111\"" --app $HEROKU_APP
 
 ## Disable a Credential  
 
