@@ -28,11 +28,11 @@ Configure an environment variable with the Heroku app name
 
 ## Disable a Credential  
 
-_TODO_
+    heroku run "POOL_SIZE=2 mix ops.credential.disable --client-id test" --app $HEROKU_APP
 
 ## Enable a Credential  
 
-_TODO_
+    heroku run "POOL_SIZE=2 mix ops.credential.enable --client-id test" --app $HEROKU_APP
 
 ## Disable a Node  
 
