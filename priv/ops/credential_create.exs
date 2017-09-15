@@ -5,7 +5,7 @@
 
 require Logger
 
-Logger.info "Create Credential"
+Logger.info "Credential.Create"
 
 argv = System.argv()
 Logger.debug "argv=#{inspect argv}"
