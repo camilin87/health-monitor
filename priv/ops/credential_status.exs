@@ -19,7 +19,10 @@ case parsed_args do
   {[enabled: enabled, client_id: client_id], []} ->
     Logger.debug "enabled=#{enabled}; client_id=#{client_id};"
 
-    # TODO: make this work
+    client_id
+    |> HMServer.Credential.get_by!
+    |> Ecto.Changeset.change(disabled: !enabled)
+    |> HMServer.Repo.update!
 
     Logger.info "Success!!"
   _ ->
