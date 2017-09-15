@@ -27,7 +27,13 @@ Logger.debug "parsed_args=#{inspect parsed_args}"
 case parsed_args do
   {[client_id: client_id, secret: secret], []} ->
     Logger.debug "client_id=#{client_id}; secret=#{secret};"
-  _ -> OpsHelper.abort_execution("Received Invalid Arguments!!")
+
+    %HMServer.Credential{client_id: client_id, secret_key: secret}
+    |> HMServer.Repo.insert!
+
+    Logger.info "Success!!"
+  _ ->
+    OpsHelper.abort_execution("Received Invalid Arguments!!")
 end
 
 
