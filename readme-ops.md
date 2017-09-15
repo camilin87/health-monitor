@@ -10,6 +10,10 @@ The following assumes the application is running on Heroku. The [following guide
 
 ## Remote Commands Prerequisites  
 
+Make sure to have the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+    heroku login
+
 Configure an environment variable with the Heroku app name  
 
     HEROKU_APP=hmapi
