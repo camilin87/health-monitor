@@ -26,6 +26,10 @@ Configure an environment variable with the Heroku app name
 
     heroku run "POOL_SIZE=2 mix ops.credential.create --client-id test --secret \"111111\"" --app $HEROKU_APP
 
+## Update a Credential  
+
+    heroku run "POOL_SIZE=2 mix ops.credential.update --client-id test --secret \"AAAAAA\"" --app $HEROKU_APP
+
 ## Disable a Credential  
 
     heroku run "POOL_SIZE=2 mix ops.credential.disable --client-id test" --app $HEROKU_APP

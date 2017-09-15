@@ -61,6 +61,7 @@ defmodule HMServer.Mixfile do
       "seed": ["ecto.seed"],
       "test": ["ecto.create --quiet", "ecto.migrate", "test"],
       "ops.credential.create": ["run priv/ops/credential_create.exs"],
+      "ops.credential.update": ["run priv/ops/credential_update.exs"],
       "ops.credential.enable": ["run priv/ops/credential_status.exs --enabled"],
       "ops.credential.disable": ["run priv/ops/credential_status.exs --no-enabled"]
     ]
