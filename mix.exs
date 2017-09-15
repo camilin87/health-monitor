@@ -60,7 +60,7 @@ defmodule HMServer.Mixfile do
       "ecto.seed": ["run priv/repo/seeds.exs"],
       "seed": ["ecto.seed"],
       "test": ["ecto.create --quiet", "ecto.migrate", "test"],
-      "ops.credential.create": ["run priv/ops/create_credential.exs"]
+      "ops.credential.create": ["run priv/ops/credential_create.exs"]
     ]
   end
 end
