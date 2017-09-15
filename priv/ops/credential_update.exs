@@ -1,4 +1,4 @@
-# Script to create a Credential
+# Script to update a Credential
 # It can be run like this
 #    mix ops.credential.update --client-id "aaaaa" --secret "super secret"
 #

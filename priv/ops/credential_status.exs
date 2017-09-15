@@ -1,4 +1,4 @@
-# Script to create a Credential
+# Script to enable/disable a Credential
 # It can be run like this
 #    mix ops.credential.enable --client-id test
 #    mix ops.credential.disable --client-id test
