@@ -1,5 +1,7 @@
 # HMServer  
 
+[![Build Status](https://travis-ci.org/camilin87/hm_server.svg?branch=master)](https://travis-ci.org/camilin87/hm_server)  
+
 A Heartbeat system to monitor the health of remote clients  
 
 # Api Docs  
