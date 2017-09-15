@@ -63,7 +63,9 @@ defmodule HMServer.Mixfile do
       "ops.credential.create": ["run priv/ops/credential_create.exs"],
       "ops.credential.update": ["run priv/ops/credential_update.exs"],
       "ops.credential.enable": ["run priv/ops/credential_status.exs --enabled"],
-      "ops.credential.disable": ["run priv/ops/credential_status.exs --no-enabled"]
+      "ops.credential.disable": ["run priv/ops/credential_status.exs --no-enabled"],
+      "ops.node.enable": ["run priv/ops/node_status.exs --enabled"],
+      "ops.node.disable": ["run priv/ops/node_status.exs --no-enabled"]
     ]
   end
 end

@@ -40,11 +40,11 @@ Configure an environment variable with the Heroku app name
 
 ## Disable a Node  
 
-_TODO_
+    heroku run "POOL_SIZE=2 mix ops.node.disable --client-id test --node node1" --app $HEROKU_APP
 
 ## Enable a Node  
 
-_TODO_
+    heroku run "POOL_SIZE=2 mix ops.node.enable --client-id test --node node1" --app $HEROKU_APP
 
 ## Send a heartbeat  
 
