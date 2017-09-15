@@ -59,7 +59,8 @@ defmodule HMServer.Mixfile do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
       "seed": ["ecto.seed"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+      "ops.credential.create": ["run priv/ops/create_credential.exs"]
     ]
   end
 end

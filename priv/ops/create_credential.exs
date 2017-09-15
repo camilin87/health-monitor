@@ -1,6 +1,6 @@
 # Script to create a Credential
 # It can be run like this
-#    mix run priv/ops/create_credential.exs --client-id "aaaaa" --secret "super secret"
+#    mix ops.credential.create --client-id "aaaaa" --secret "super secret"
 #
 
 require Logger
