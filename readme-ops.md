@@ -29,3 +29,12 @@ _TODO_
 ## Disable a Node  
 
 _TODO_
+
+## Send a heartbeat  
+
+```bash
+curl -w '\n' -i -X POST \
+  https://hmapi.herokuapp.com/api/beat \
+  -u 'test:111111' \
+  -F hostname=node1
+```
