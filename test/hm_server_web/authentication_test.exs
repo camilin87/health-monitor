@@ -1,10 +1,6 @@
 defmodule HMServerWeb.AuthenticationTest do
   use HMServerWeb.ConnCase
 
-  test "targeted failure" do
-    assert 2 == 1
-  end
-
   describe "read_user!" do
     test "reads the user", %{conn: conn} do
       assert default_user() == conn
