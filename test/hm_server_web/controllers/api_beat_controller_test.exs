@@ -1,6 +1,7 @@
 defmodule HMServerWeb.ApiBeatControllerTest do
   use HMServerWeb.ConnCase
   alias HMServer.Repo, as: Repo
+  alias HMServer.Node, as: Node
 
   defp send_hostname(hostname \\ default_hostname()), do: [hostname: hostname] 
 
@@ -12,7 +13,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
       disabled: false
     }, fn _, v1, _ -> v1 end)
 
-    assert node = HMServer.Node |> Repo.get_by!(hostname: params.hostname)
+    assert node = Node |> Repo.get_by!(hostname: params.hostname)
     assert params.hostname == node.hostname
     assert datetimes_match(params.last_beat, node.last_beat)
     assert params.failure_count == node.failure_count

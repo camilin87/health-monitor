@@ -1,6 +1,7 @@
 defmodule HMServer.Factory do
   alias HMServer.Repo, as: Repo
   alias HMServer.Credential, as: Credential
+  alias HMServer.Node, as: Node
 
   def default_user, do: "test"
   def default_password, do: "111111"
@@ -15,7 +16,7 @@ defmodule HMServer.Factory do
   end
 
   def build(:node) do
-    %HMServer.Node{
+    %Node{
       hostname: default_hostname(),
       last_beat: DateTime.utc_now,
       failure_count: 0,

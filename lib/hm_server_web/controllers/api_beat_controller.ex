@@ -1,6 +1,7 @@
 defmodule HMServerWeb.ApiBeatController do
   use HMServerWeb, :controller
   alias HMServerWeb.Authentication, as: Authentication
+  alias HMServer.Node, as: Node
 
   plug BasicAuth, [
     callback: &Authentication.authenticate/3
@@ -8,9 +9,9 @@ defmodule HMServerWeb.ApiBeatController do
 
   def create(conn, %{"hostname" => hostname}) do
     credential = conn |> Authentication.read_credential!
-    node = HMServer.Node.get_by!(hostname, credential)
+    node = Node.get_by!(hostname, credential)
 
-    node |> HMServer.Node.update!
+    node |> Node.update!
 
     json conn, %{success: true}
   end

@@ -3,6 +3,7 @@ defmodule HMServer.NodeTest do
 
   alias HMServer.Repo, as: Repo
   alias HMServer.Credential, as: Credential
+  alias HMServer.Node, as: Node
 
   defp validate!(item, params) do
     assert params.hostname == item.hostname
@@ -19,7 +20,7 @@ defmodule HMServer.NodeTest do
       cred = insert!(:credential)
       insert!(:node, %{credential: cred})
 
-      assert node = HMServer.Node.get_by!("new_host", cred)
+      assert node = Node.get_by!("new_host", cred)
       |> validate!(%{
         hostname: "new_host",
         last_beat: DateTime.utc_now,
@@ -36,7 +37,7 @@ defmodule HMServer.NodeTest do
       insert!(:node, %{credential: cred, hostname: "ignored"})
       insert!(:node, %{credential: cred, failure_count: 2, disabled: true})
 
-      HMServer.Node.get_by!(default_hostname(), cred)
+      Node.get_by!(default_hostname(), cred)
       |> validate!(%{
         hostname: default_hostname(),
         last_beat: DateTime.utc_now,
@@ -63,29 +64,29 @@ defmodule HMServer.NodeTest do
     test "returns the item unmodified when it is disabled" do
       node = build(:node, %{failure_count: 2, disabled: true})
 
-      assert node == node |> HMServer.Node.update!
+      assert node == node |> Node.update!
     end
 
     test "inserts a new item" do
       cred = insert!(:credential)
       node = build(:node, %{credential: cred})
 
-      assert inserted_node = node |> HMServer.Node.update!
+      assert inserted_node = node |> Node.update!
       inserted_node |> validate!(expected_params())
 
-      assert repo_node = HMServer.Node |> Repo.get_by!(%{id: inserted_node.id})
+      assert repo_node = Node |> Repo.get_by!(%{id: inserted_node.id})
       repo_node |> validate!(expected_params())
     end
 
     test "updates an existing item" do
       cred = insert!(:credential)
       insert!(:node, %{credential: cred, failure_count: 2})
-      node = HMServer.Node |> Repo.get_by!(hostname: default_hostname())
+      node = Node |> Repo.get_by!(hostname: default_hostname())
 
-      assert inserted_node = node |> HMServer.Node.update!
+      assert inserted_node = node |> Node.update!
       inserted_node |> validate!(expected_params())
 
-      assert repo_node = HMServer.Node |> Repo.get_by!(%{id: inserted_node.id})
+      assert repo_node = Node |> Repo.get_by!(%{id: inserted_node.id})
       repo_node |> validate!(expected_params())
     end
   end
