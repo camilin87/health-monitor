@@ -15,6 +15,7 @@ defmodule HMServerWeb.ConnCase do
 
   use ExUnit.CaseTemplate
   alias HMServer.Repo, as: Repo
+  alias HMServerWeb.Authentication, as: Authentication
 
   using do
     quote do
@@ -53,7 +54,7 @@ defmodule HMServerWeb.ConnCase do
   end
 
   def reset_user_rate_limit(user \\ HMServer.Factory.default_user()) do
-    bucket_id = HMServerWeb.Authentication.rate_limit_bucket_id(user)
+    bucket_id = Authentication.rate_limit_bucket_id(user)
     ExRated.delete_bucket(bucket_id)
   end
 

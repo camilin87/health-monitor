@@ -1,24 +1,25 @@
 defmodule HMServerWeb.AuthenticationTest do
   use HMServerWeb.ConnCase
+  alias HMServerWeb.Authentication, as: Authentication
 
   describe "read_user!" do
     test "reads the user", %{conn: conn} do
       assert default_user() == conn
       |> authenticate
-      |> HMServerWeb.Authentication.read_user!
+      |> Authentication.read_user!
     end
 
     test "fails when the user is empty", %{conn: conn} do
       assert_raise ArgumentError, fn ->
         assert default_user() == conn
         |> authenticate("")
-        |> HMServerWeb.Authentication.read_user!
+        |> Authentication.read_user!
       end
     end
 
     test "fails when no authorization header is provided", %{conn: conn} do
       assert_raise ArgumentError, fn ->
-        conn |> HMServerWeb.Authentication.read_user!
+        conn |> Authentication.read_user!
       end
     end
 
@@ -26,7 +27,7 @@ defmodule HMServerWeb.AuthenticationTest do
       assert_raise ArgumentError, fn ->
         conn
         |> put_req_header("authorization", "invalid")
-        |> HMServerWeb.Authentication.read_user!
+        |> Authentication.read_user!
       end
     end
 
@@ -34,7 +35,7 @@ defmodule HMServerWeb.AuthenticationTest do
       assert_raise ArgumentError, fn ->
         conn
         |> put_req_header("authorization", "Basic invalid")
-        |> HMServerWeb.Authentication.read_user!
+        |> Authentication.read_user!
       end
     end
   end
@@ -45,7 +46,7 @@ defmodule HMServerWeb.AuthenticationTest do
 
       assert cred = conn
       |> authenticate
-      |> HMServerWeb.Authentication.read_credential!
+      |> Authentication.read_credential!
 
       assert seeded_cred.id == cred.id
       assert seeded_cred.client_id == cred.client_id
@@ -54,12 +55,12 @@ defmodule HMServerWeb.AuthenticationTest do
 
   describe "authenticate" do
     test "halts the connection when credentials are invalid", %{conn: conn} do
-      assert true == HMServerWeb.Authentication.authenticate(conn, "unknown", "unknown").halted
+      assert true == Authentication.authenticate(conn, "unknown", "unknown").halted
     end
 
     test "returns the connection unmodified when the credentials are valid", %{conn: conn} do
       insert!(:credential)
-      assert conn == HMServerWeb.Authentication.authenticate(conn, default_user(), default_password())
+      assert conn == Authentication.authenticate(conn, default_user(), default_password())
     end
 
     test "rate limits the credential", %{conn: conn} do
@@ -71,14 +72,14 @@ defmodule HMServerWeb.AuthenticationTest do
       1..5
       |> Enum.to_list
       |> Enum.each(fn _ ->
-        assert false == HMServerWeb.Authentication.authenticate(conn, "AAAAAA", default_password()).halted
+        assert false == Authentication.authenticate(conn, "AAAAAA", default_password()).halted
       end)
-      assert true == HMServerWeb.Authentication.authenticate(conn, "AAAAAA", default_password()).halted
+      assert true == Authentication.authenticate(conn, "AAAAAA", default_password()).halted
 
       1..5
       |> Enum.to_list
       |> Enum.each(fn _ ->
-        assert false == HMServerWeb.Authentication.authenticate(conn, "BBBBBB", default_password()).halted
+        assert false == Authentication.authenticate(conn, "BBBBBB", default_password()).halted
       end)
     end
   end
