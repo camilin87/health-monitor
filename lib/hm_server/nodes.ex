@@ -8,6 +8,7 @@ defmodule HMServer.Node do
   alias Ecto.Changeset, as: Changeset
   alias HMServer.Repo, as: Repo
   alias HMServer.Credential, as: Credential
+  alias HMServer.Node, as: Node
 
   schema "api_client_nodes" do
     field :hostname, :string
@@ -22,8 +23,8 @@ defmodule HMServer.Node do
 
   def get_by!(hostname, credential) do
     query = %{hostname: hostname, credential_id: credential.id}
-    case HMServer.Node |> Repo.get_by(query) do
-      nil -> %HMServer.Node{
+    case Node |> Repo.get_by(query) do
+      nil -> %Node{
         hostname: hostname,
         last_beat: DateTime.utc_now,
         failure_count: 0,
