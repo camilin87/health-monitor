@@ -6,6 +6,7 @@
 
 require Logger
 alias HMServer.Repo, as: Repo
+alias HMServer.Credential, as: Credential
 
 Logger.info "Node.Status"
 
@@ -20,7 +21,7 @@ case parsed_args do
   {[enabled: enabled, client_id: client_id, node: hostname], []} ->
     Logger.debug "enabled=#{enabled}; client_id=#{client_id}; node=#{hostname};"
 
-    credential = HMServer.Credential.get_by!(client_id)
+    credential = Credential.get_by!(client_id)
     node = HMServer.Node.get_by!(hostname, credential)
     node
     |> Ecto.Changeset.change(disabled: !enabled)

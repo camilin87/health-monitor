@@ -7,6 +7,7 @@ defmodule HMServer.Credential do
   require Logger
   alias HMServer.Repo, as: Repo
   alias HMServer.Cache, as: Cache
+  alias HMServer.Credential, as: Credential
 
   schema "api_credentials" do
     field :client_id, :string
@@ -53,7 +54,7 @@ defmodule HMServer.Credential do
   end
 
   def get_by!(client_id) do
-    HMServer.Credential
+    Credential
     |> Repo.get_by!(client_id: client_id)
   end
 end

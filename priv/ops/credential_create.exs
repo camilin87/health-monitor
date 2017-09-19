@@ -5,6 +5,7 @@
 
 require Logger
 alias HMServer.Repo, as: Repo
+alias HMServer.Credential, as: Credential
 
 Logger.info "Credential.Create"
 
@@ -19,7 +20,7 @@ case parsed_args do
   {[client_id: client_id, secret: secret], []} ->
     Logger.debug "client_id=#{client_id}; secret=#{secret};"
 
-    %HMServer.Credential{client_id: client_id, secret_key: secret}
+    %Credential{client_id: client_id, secret_key: secret}
     |> Repo.insert!
 
     Logger.info "Success!!"

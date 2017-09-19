@@ -1,12 +1,13 @@
 defmodule HMServer.Factory do
   alias HMServer.Repo, as: Repo
+  alias HMServer.Credential, as: Credential
 
   def default_user, do: "test"
   def default_password, do: "111111"
   def default_hostname, do: "node1"
 
   def build(:credential) do
-    %HMServer.Credential{
+    %Credential{
       client_id: default_user(),
       secret_key: default_password(),
       disabled: false

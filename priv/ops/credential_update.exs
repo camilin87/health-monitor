@@ -5,6 +5,7 @@
 
 require Logger
 alias HMServer.Repo, as: Repo
+alias HMServer.Credential, as: Credential
 
 Logger.info "Credential.Update"
 
@@ -20,7 +21,7 @@ case parsed_args do
     Logger.debug "client_id=#{client_id}; secret=#{secret};"
 
     client_id
-    |> HMServer.Credential.get_by!
+    |> Credential.get_by!
     |> Ecto.Changeset.change(secret_key: secret)
     |> Repo.update!
 

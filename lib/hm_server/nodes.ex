@@ -7,6 +7,7 @@ defmodule HMServer.Node do
   require Logger
   alias Ecto.Changeset, as: Changeset
   alias HMServer.Repo, as: Repo
+  alias HMServer.Credential, as: Credential
 
   schema "api_client_nodes" do
     field :hostname, :string
@@ -14,7 +15,7 @@ defmodule HMServer.Node do
     field :failure_count, :integer
     field :disabled, :boolean
 
-    belongs_to :credential, HMServer.Credential
+    belongs_to :credential, Credential
 
     timestamps()
   end

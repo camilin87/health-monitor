@@ -2,6 +2,7 @@ defmodule HMServer.NodeTest do
   use HMServerWeb.ConnCase
 
   alias HMServer.Repo, as: Repo
+  alias HMServer.Credential, as: Credential
 
   defp validate!(item, params) do
     assert params.hostname == item.hostname
@@ -48,8 +49,7 @@ defmodule HMServer.NodeTest do
 
   describe "update!" do
     defp expected_params() do
-      cred = HMServer.Credential
-      |> Repo.get_by(%{client_id: default_user()})
+      cred = Credential.get_by!(default_user())
 
       %{
         hostname: default_hostname(),

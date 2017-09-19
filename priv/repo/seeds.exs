@@ -4,9 +4,10 @@
 #
 
 alias HMServer.Repo, as: Repo
+alias HMServer.Credential, as: Credential
 
 defmodule SeedHelper do
-  def get_credential(name), do: Repo.get_by(HMServer.Credential, client_id: name)
+  def get_credential(name), do: Repo.get_by(Credential, client_id: name)
 
   def insert(), do: &Repo.insert!(&1)
 
@@ -20,15 +21,15 @@ end
 # idempotency guarantor
 [
   HMServer.Node,
-  HMServer.Credential
+  Credential
 ]
 |> Enum.each(SeedHelper.delete_all)
 
 
 [
-  %HMServer.Credential{client_id: "test", secret_key: "111111"},
-  %HMServer.Credential{client_id: "sample", secret_key: "aaaaa"},
-  %HMServer.Credential{client_id: "invalid", secret_key: "111111", disabled: true}
+  %Credential{client_id: "test", secret_key: "111111"},
+  %Credential{client_id: "sample", secret_key: "aaaaa"},
+  %Credential{client_id: "invalid", secret_key: "111111", disabled: true}
 ]
 |> Enum.each(SeedHelper.insert)
 
