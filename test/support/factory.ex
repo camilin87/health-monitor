@@ -1,4 +1,6 @@
 defmodule HMServer.Factory do
+  alias HMServer.Repo, as: Repo
+
   def default_user, do: "test"
   def default_password, do: "111111"
   def default_hostname, do: "node1"
@@ -25,7 +27,7 @@ defmodule HMServer.Factory do
   end
 
   def insert!(factory_name, attributes \\ []) do
-    HMServer.Repo.insert! build(factory_name, attributes)
+    Repo.insert! build(factory_name, attributes)
   end
 
   def attrs_map(factory_name, attributes\\[]) do

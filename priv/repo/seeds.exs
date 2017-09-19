@@ -3,12 +3,14 @@
 #     mix seed
 #
 
+alias HMServer.Repo, as: Repo
+
 defmodule SeedHelper do
-  def get_credential(name), do: HMServer.Repo.get_by(HMServer.Credential, client_id: name)
+  def get_credential(name), do: Repo.get_by(HMServer.Credential, client_id: name)
 
-  def insert(), do: &HMServer.Repo.insert!(&1)
+  def insert(), do: &Repo.insert!(&1)
 
-  def delete_all(), do: &HMServer.Repo.delete_all(&1)
+  def delete_all(), do: &Repo.delete_all(&1)
 
   def update_last_beat(), do: &SeedHelper.update_last_beat(&1)
   def update_last_beat(item), do: %{item | last_beat: DateTime.utc_now}

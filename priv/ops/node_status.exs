@@ -5,7 +5,7 @@
 #
 
 require Logger
-# alias HMServer.Node, as: Node
+alias HMServer.Repo, as: Repo
 
 Logger.info "Node.Status"
 
@@ -24,7 +24,7 @@ case parsed_args do
     node = HMServer.Node.get_by!(hostname, credential)
     node
     |> Ecto.Changeset.change(disabled: !enabled)
-    |> HMServer.Repo.update!
+    |> Repo.update!
 
     Logger.info "Success!!"
   _ ->

@@ -5,6 +5,7 @@
 #
 
 require Logger
+alias HMServer.Repo, as: Repo
 
 Logger.info "Credential.Status"
 
@@ -22,7 +23,7 @@ case parsed_args do
     client_id
     |> HMServer.Credential.get_by!
     |> Ecto.Changeset.change(disabled: !enabled)
-    |> HMServer.Repo.update!
+    |> Repo.update!
 
     Logger.info "Success!!"
   _ ->

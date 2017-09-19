@@ -14,6 +14,7 @@ defmodule HMServerWeb.ConnCase do
   """
 
   use ExUnit.CaseTemplate
+  alias HMServer.Repo, as: Repo
 
   using do
     quote do
@@ -58,6 +59,6 @@ defmodule HMServerWeb.ConnCase do
 
   def disable_api() do
     HMServer.Status
-    |> HMServer.Repo.delete_all
+    |> Repo.delete_all
   end
 end
