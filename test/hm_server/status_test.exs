@@ -6,15 +6,13 @@ defmodule HMServer.StatusTest do
 
   describe "online?" do
     test "returns false when db is empty" do
-      HMServer.Status
-      |> Repo.delete_all
+      disable_api()
 
       assert false == Status.online?
     end
 
     test "returns false when the service is disabled" do
-      HMServer.Status
-      |> Repo.delete_all
+      disable_api()
 
       %HMServer.Status{disabled: true}
       |> Repo.insert!
@@ -23,8 +21,7 @@ defmodule HMServer.StatusTest do
     end
 
     test "returns true when the service is enabled" do
-      HMServer.Status
-      |> Repo.delete_all
+      disable_api()
 
       %HMServer.Status{disabled: false}
       |> Repo.insert!
@@ -35,8 +32,7 @@ defmodule HMServer.StatusTest do
     test "caches the results for a short period of time" do
       assert true == Status.online?
 
-      HMServer.Status
-      |> Repo.delete_all
+      disable_api()
 
       assert true == Status.online?
     end

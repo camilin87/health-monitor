@@ -55,4 +55,9 @@ defmodule HMServerWeb.ConnCase do
     bucket_id = HMServerWeb.Authentication.rate_limit_bucket_id(user)
     ExRated.delete_bucket(bucket_id)
   end
+
+  def disable_api() do
+    HMServer.Status
+    |> HMServer.Repo.delete_all
+  end
 end

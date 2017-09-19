@@ -123,8 +123,7 @@ defmodule HMServerWeb.ApiBeatControllerTest do
   end
 
   test "POST /api/beat fails when the api is down", %{conn: conn} do
-    HMServer.Status
-    |> HMServer.Repo.delete_all
+    disable_api()
 
     conn = conn
     |> authenticate
