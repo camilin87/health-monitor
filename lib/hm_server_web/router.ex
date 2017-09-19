@@ -11,6 +11,7 @@ defmodule HMServerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug HMServerWeb.ApiStatus
   end
 
   # Other scopes may use custom stacks.
