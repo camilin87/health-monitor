@@ -121,4 +121,15 @@ defmodule HMServerWeb.ApiBeatControllerTest do
       credential_id: cred.id
     })
   end
+
+  test "POST /api/beat fails when the api is down", %{conn: conn} do
+    HMServer.Status
+    |> HMServer.Repo.delete_all
+
+    conn = conn
+    |> authenticate
+    |> post("/api/beat", send_hostname())
+
+    assert 503 == conn.status
+  end
 end

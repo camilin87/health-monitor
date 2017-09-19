@@ -2,6 +2,8 @@ defmodule HMServerWeb.ApiBeatController do
   use HMServerWeb, :controller
   alias HMServerWeb.Authentication, as: Authentication
 
+  plug HMServerWeb.ApiStatus when action in [:create]
+
   plug BasicAuth, [
     callback: &Authentication.authenticate/3
   ] when action in [:create]

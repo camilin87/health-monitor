@@ -14,7 +14,7 @@ defmodule HMServerWeb.ApiStatusControllerTest do
 
     conn = get conn, "/api/status"
 
-    assert false == json_response(conn, 503)["success"]
+    assert 503 == conn.status
   end
 
   test "GET /api/status caches responses for a short period of time", %{conn: conn} do
