@@ -1,6 +1,7 @@
 defmodule HMServer.Repo.Migrations.CreateApiStatus do
   use Ecto.Migration
   alias HMServer.Repo, as: Repo
+  alias HMServer.Status, as: Status
 
   def up do
     create table(:api_status) do
@@ -11,7 +12,7 @@ defmodule HMServer.Repo.Migrations.CreateApiStatus do
 
     flush()
 
-    Repo.insert!(%HMServer.Status{disabled: false})
+    Repo.insert!(%Status{disabled: false})
   end
 
   def down do

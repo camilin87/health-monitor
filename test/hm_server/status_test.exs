@@ -14,7 +14,7 @@ defmodule HMServer.StatusTest do
     test "returns false when the service is disabled" do
       disable_api()
 
-      %HMServer.Status{disabled: true}
+      %Status{disabled: true}
       |> Repo.insert!
 
       assert false == Status.online?
@@ -23,7 +23,7 @@ defmodule HMServer.StatusTest do
     test "returns true when the service is enabled" do
       disable_api()
 
-      %HMServer.Status{disabled: false}
+      %Status{disabled: false}
       |> Repo.insert!
 
       assert true == Status.online?
